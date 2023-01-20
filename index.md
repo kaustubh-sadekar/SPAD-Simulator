@@ -11,7 +11,7 @@ SPAD-based cameras are becoming a popular choice of sensors for direct time-of-f
 `*Note: This project page does not cover basics of time of flight imaging and SPADs. Links to relevent blogs would be updated here soon*`
 
 <p align='center'>
-  <img src='/images/High_SBR.gif'>
+  <img src='/images/Simulator-Demo.gif'>
 </p>
 <p align='center'>
     Improved depth estimates over multiple laser cycles for high SBR scenario.
