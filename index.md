@@ -14,7 +14,7 @@ SPAD-based cameras are becoming a popular choice of sensors for direct time-of-f
   <img src='images/Simulator-Demo.gif'>
 </p>
 <p align='center'>
-    Improved depth estimates over multiple laser cycles for high SBR scenario.
+    Improved depth estimates over multiple laser cycles for low SBR scenario.
 </p>
 
 ## This page will be updated soon...
