@@ -1,0 +1,6 @@
+theme: minima
+title: SPARK a robotic sketching arm
+description: A 3DOF robotic arm capable of sketching images using ROS and OpenCV.
+
+header_pages:
+  about.md
