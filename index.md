@@ -14,7 +14,7 @@ SPAD-based cameras are becoming a popular choice of sensors for direct time-of-f
 
 ## SPAD-based time of flight imaging model
 
-Any time of flight (ToF) imaging system has three major components - An active light source, a photodetector, and a circuit that records, computes and transfers the time elapsed between the emission and detection of the light. In a SPAD-based direct ToF imaging system, the active light source is a laser pulse, and the photodetector is a SPAD pixel. 
+A time of flight (ToF) imaging system has three major components - An active light source, a photodetector, and a circuit that records, computes and transfers the time elapsed between the emission and detection of the light. In a SPAD-based direct ToF imaging system, the active light source is a laser pulse, and the photodetector is a SPAD pixel. 
 
 The following image illustrates the direct ToF imaging model for the SPAD-based ToF imaging system. The light source (an infrared laser) emits signal photons as periodic laser pulses $s(t) = \delta(t)$. The laser pulse interacts with the 3D scene and is reflected back. Finally the SPAD pixel detects the reflected signal photons, and the time elapsed between the emission and detection of the signal is measured as the time of flight ($t_0$). Finally the scene depth is obtained by multiplying $t_0$ with the speed of light and dividng by two. 
 
