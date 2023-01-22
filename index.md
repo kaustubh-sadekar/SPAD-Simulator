@@ -24,7 +24,7 @@ Any time of flight (ToF) imaging system has three major components - An active l
 The following image illustrates the direct ToF imaging model for the SPAD-based ToF imaging system. The laser source emits a light signal as a periodic pulse $s(t) = \delta(t)$. The laser pulse interacts with the 3D scene and is reflected back. Finally the SPAD pixel detects the reflected signal photons, and the time elapsed between the emission and detection of the signal is measured as the time of flight ($t_0$). Finally the scene depth is obtained by multiplying $t_0$ with the speed of light and dividng by two. 
 
 <p align='center'>
-  <img src='images/ToF_Diagram.png' width = 80%>
+  <img src='images/ToF_Diagram.png'>
 </p>
 <p align='center'>
     Diagram explaining the imaging model for SPAD-based ToF imaging system. Diagram source [1].
