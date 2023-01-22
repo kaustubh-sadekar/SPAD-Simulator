@@ -29,12 +29,15 @@ The following image illustrates the direct ToF imaging model for the SPAD-based 
   <img src='images/ToF_Diagram.png' width="60%">
 </p>
 <p align='center'>
-    Diagram explaining the imaging model for SPAD-based ToF imaging system. Diagram source [1].
+    Diagram explaining the imaging model for SPAD-based ToF imaging system. <i>Modified version of diagram from [1]</i>.
 </p>
 
 
 
 
+
+
+## This page will be updated soon
 ---
 
 ## References
