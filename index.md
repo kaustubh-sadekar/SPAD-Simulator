@@ -25,6 +25,16 @@ The following image illustrates the direct ToF imaging model for a SPAD-based To
     Figure 1 - Diagram explaining the imaging model for SPAD-based ToF imaging system. <i>Modified version of diagram from [1]</i>.
 </p>
 
+`So why is it so dificult to estimate depth? - we start the timer as the laser emits the signal and stop the timer when it's detected.`
+<p align='center'>
+  <img src='https://user-images.githubusercontent.com/42736936/213940266-6c7e6413-c015-4146-b4a7-4f5addc33840.png' width="40%">
+</p>
+<p align='center'>
+    <a href="https://user-images.githubusercontent.com/42736936/213940266-6c7e6413-c015-4146-b4a7-4f5addc33840.png"> <i> Image source </i> </a>.
+</p>
+
+
+
 
 
 
