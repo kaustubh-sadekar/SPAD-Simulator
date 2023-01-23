@@ -9,9 +9,7 @@ layout: default
 
 
 ## Project in brief
-SPAD-based cameras are becoming a popular choice of sensors for direct time-of-flight 3D imaging systems. However, the depth estimates are significantly affected when the ambient light is stronger than the light source used by the 3D imaging system. This project aims to simulate a SPAD sensor and study the effect of laser power, background light strength, scene depth, and albedo on the SPAD sensor measurements.
-
-`*Note: This project page does not cover the basics of time of flight imaging and SPADs. Links to relevant blogs to be updated here soon*`
+SPAD-based cameras are becoming a popular choice of sensors for direct time-of-flight 3D imaging systems. However, the depth estimates are significantly affected when the ambient light is stronger than the light source used by the 3D imaging system. This project aims to simulate a SPAD sensor and study the effect of laser power, background light strength, scene depth, and albedo on the SPAD sensor measurements. *Note: The objective of this simulator is to generate SPAD data from existing RGB-D dataset hence multi-path interference is not considered in this simulator as it is dificult and computationally expensive to estimate the light transport from a single RGB-D frame. Hence the scene response function (SRF) of a 3D point is basically a time-shifted impulse where the time shift is proportional to the scene depth*.
 
 ## SPAD-based time of flight imaging model
 
@@ -42,33 +40,40 @@ Theoretically, we can estimate time of flight ( t_0 ) by measuring the delay bet
 2. Photon arrival is nondeterministic in nature.
   SPADs are fast enough to capture individual photons hence we can achive high sampling rate using SPADs. However, it is important to note that $\Phi(t)$ represents the expected received signal and not the actual photon timestamp histogram. Hence, even if we are able to avoid the pile-up effect and capture every photon incident on the SPAD pixel, the photon timestamp histogram would still not look like a quantised/ sampled version of $\Phi(t)$. This is because the photon timestamps follow a Poisson distribution where the value of $\Phi(t)$ represents the expected number of photons detected in a given time interval but the actual photon counts may vary. Hence, if the photon timestamps are not recorded for sufficient number of laser cycles the peak of the photon timestamp histogram may not correspond to the received signal $\Phi(t)$ resulting in inacurate depth estimates. The following GIF illustrates this phenomenon for a single SPAD pixel using our SPAD simulator.
 
-<p align='center'>
-  <img src='images/photon_hist.png' width="80%">
-</p>
-<p align='center'>
-    Figure 2 - GIF illustrating the effect of photon randomness on the measure photon timestamp histogram and its deviation form the expected recieved signal. We clearly observe that increasing the number of laser cycles takes measured histogram closer to the return signal waveform.</i>.
-</p>
+    <p align='center'>
+      <img src='images/photon_hist.png' width="80%">
+    </p>
+    <p align='center'>
+        Figure 2 - GIF illustrating the effect of photon randomness on the measure photon timestamp histogram and its deviation form the expected recieved signal. We clearly observe that increasing the number of laser cycles takes measured histogram closer to the return signal waveform.</i>.
+    </p>
 
-3. Poor signal to background ratio (SBR).
-  SBR is the ratio of expected number of signal photons ($Phi_{sig}$) to the expected number of background photons ($\Phi_{bg}$). In case of poor SBR scenarios the difference between expected number of signal photons and background photons is less hence there is a high probability that the SPAD pixel measures more background photons than the signal photons resulting in noisy histograms with inacurate peak and hence noisy depth estimates. The following GIF illustrates the effect of SBR on the measured histogram and the depth estimates.
+3. Poor signal to background ratio (SBR). SBR is the ratio of expected number of signal photons ($Phi_{sig}$) to the expected number of background photons ($\Phi_{bg}$). In case of poor SBR scenarios the difference between expected number of signal photons and background photons is less hence there is a high probability that the SPAD pixel measures more background photons than the signal photons resulting in noisy histograms with inacurate peak and hence noisy depth estimates. The following GIF illustrates the effect of SBR on the measured histogram and the depth estimates.
   
   
-<p align='center'>
-  <img src='images/effect_of_SBR.png' width="80%">
-</p>
-<p align='center'>
-    Figure 3 - GIF illustrating the effect of SBR on the measured histogram and the corresponding depth estimates.</i>.
-</p>
+    <p align='center'>
+      <img src='images/effect_of_SBR.png' width="80%">
+    </p>
+    <p align='center'>
+        Figure 3 - GIF illustrating the effect of SBR on the measured histogram and the corresponding depth estimates.</i>.
+    </p>
 
 ## Major steps of the SPAD simulator
 
-* Calculate the time-of-flight (t<sub>0</sub>) from the ground truth depth value as t<sub>0</sub> = 2d/c where d is the ground truth depth value and c is the speed of light.
+### Calculate the time-of-flight (t<sub>0</sub>) from the ground truth depth value.
+We use the following formula t<sub>0</sub> = 2d/c where d is the ground truth depth value and c is the speed of light.
 
-* Modelling the probing function or the laser pulse s(t) = &delta;(t). An ideal pulse would have a non zero value at t<sub>0</sub> and zero elsewhere. However, this is practically impossible to achieve. The actual shape of the waveform is limited due to three major physical properties of the laser diode (i) rise time (time taken for the laser intensity to reach from zero to maximum), (ii) fall time (opposite of rise time) and (iii) laser power - In order to emmit a desired amount of energy with a limited power laser source we need to keep the laser on for some minimum non-zero amount of time which determines the laser pulse width.
+### Modelling the probing function or the laser pulse s(t) = &delta;(t). 
+An ideal pulse would have a non zero value at t<sub>0</sub> and zero elsewhere. However, this is practically impossible to achieve. The actual shape of the waveform is limited due to three major physical properties of the laser diode (i) rise time (time taken for the laser intensity to reach from zero to maximum), (ii) fall time (opposite of rise time) and (iii) laser power - In order to emmit a desired amount of energy with a limited power laser source we need to keep the laser on for some minimum non-zero amount of time which determines the laser pulse width.
   
-  * Modelling the pulse as a gaussian - Instead of considering the rise time, fall time and the laser pulse width individually we combine these together and approximate the pulse with a gaussian. 
-  * 
-  
+1. Modelling the pulse as a gaussian - Instead of considering the rise time, fall time and the laser pulse width individually we combine these together and approximate the pulse with a gaussian. 
+
+2. Full width half maximum (FWHM) - This is one of the controlable parameters of the simulator. It controls the width of the laser pulse. Since we are approximating the laser pulse as a gaussian, we can change the standard deviaiton by changing the FWHM value. The &sigma; of the gaussian kernel is calculated using the following formula: FWHM = 2.355 &sigma;
+
+3. Setting the laser power - The laser power can be controlled using another controlable parameter &Phi;<sub>sig</sub>. &Phi;<sub>sig</sub> is the average number of signal photons (or laser photons) per laser cycle. 
+
+4. Setting the laser time period - This is another parameter which can be controlled in the simulator. Changing the time period T changes the maximum depth value that can be measured as d<sub>max</sub> = Tc/2, where c is the speed of light.
+
+
 
 
 ## .......This page will be updated soon .....................
