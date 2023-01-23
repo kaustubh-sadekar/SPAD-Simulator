@@ -17,7 +17,7 @@ SPAD-based cameras are becoming a popular choice of sensors for direct time-of-f
 
 A time of flight (ToF) imaging system has three major components - An active light source, a photodetector, and a circuit that records, computes, and transfers the time elapsed (time of flight) between the emission and detection of the signal photons. In a SPAD-based direct ToF imaging system, the active light source is a laser, and the photodetector is a SPAD pixel.
 
-The following image illustrates the direct ToF imaging model for a SPAD-based ToF imaging system. The light source (an infrared laser) emits signal photons as periodic laser pulse s(t) = &delta; (t). The laser pulse interacts with the 3D scene and is reflected back. Finally, the SPAD pixel detects the reflected signal photons, and the time elapsed between the emission and detection of the signal is measured as the time of flight ( t<sub>0</sub> ). The scene depth is obtained by multiplying $t_0$ with the speed of light and dividing by two.
+The following image illustrates the direct ToF imaging model for a SPAD-based ToF imaging system. The light source (an infrared laser) emits signal photons as periodic laser pulse s(t) = &delta;(t). The laser pulse interacts with the 3D scene and is reflected back. Finally, the SPAD pixel detects the reflected signal photons, and the time elapsed between the emission and detection of the signal is measured as the time of flight ( t<sub>0</sub> ). The scene depth is obtained by multiplying $t_0$ with the speed of light and dividing by two.
 
 <p align='center'>
   <img src='images/ToF_Diagram.png' width="80%">
@@ -60,8 +60,14 @@ Theoretically, we can estimate time of flight ( t_0 ) by measuring the delay bet
     Figure 3 - GIF illustrating the effect of SBR on the measured histogram and the corresponding depth estimates.</i>.
 </p>
 
+## Major steps of the SPAD simulator
 
+* Calculate the time-of-flight (t<sub>0</sub>) from the ground truth depth value as t<sub>0</sub> = 2d/c where d is the ground truth depth value and c is the speed of light.
+
+* Modelling the probing function or the laser pulse s(t) = &delta;(t). An ideal pulse would have a non zero value at t<sub>0</sub> and zero elsewhere. However, this is practically impossible to achieve. The actual shape of the waveform is limited due to three major physical properties of the laser diode (i) rise time (time taken for the laser intensity to reach from zero to maximum), (ii) fall time (opposite of rise time) and (iii) laser power - In order to emmit a desired amount of energy with a limited power laser source we need to keep the laser on for some minimum non-zero amount of time which determines the laser pulse width.
   
+  * Modelling the pulse as a gaussian - Instead of considering the rise time, fall time and the laser pulse width individually we combine these together and approximate the pulse with a gaussian. 
+  * 
   
 
 
