@@ -9,7 +9,7 @@ layout: default
 
 
 ## Project in brief
-SPAD-based cameras are becoming a popular choice of sensors for direct time-of-flight 3D imaging systems. However, the depth estimates are significantly affected when the ambient light is stronger than the light source used by the 3D imaging system. This project aims to simulate a SPAD sensor and study the effect of laser power, background light strength, scene depth, and albedo on the SPAD sensor measurements. *Note: The objective of this simulator is to generate SPAD data from existing RGB-D dataset hence multi-path interference is not considered in this simulator as it is difficult and computationally expensive to estimate the light transport from a single RGB-D frame. Hence the scene response function (SRF) of a 3D point is a time-shifted impulse where the time shift is proportional to the scene depth*.
+SPAD-based cameras are becoming a popular choice of sensors for direct time-of-flight 3D imaging systems. However, the depth estimates are significantly affected when the ambient light is stronger than the light source used by the 3D imaging system. This project aims to simulate a SPAD sensor and study the effect of laser power, background light strength, scene depth, and albedo on the SPAD sensor measurements. *Note: The objective of this simulator is to generate SPAD data from existing RGB-D dataset hence multi-path interference is not considered in this simulator as it is difficult and computationally expensive to estimate the light transport from a single RGB-D frame. Hence the scene response function (SRF) of a 3D point is simply a time-shifted impulse where the time shift is proportional to the scene depth*.
 
 ## SPAD-based time of flight imaging model
 
@@ -29,7 +29,7 @@ The following image illustrates the direct ToF imaging model for a SPAD-based To
   <img src='https://user-images.githubusercontent.com/42736936/213940266-6c7e6413-c015-4146-b4a7-4f5addc33840.png' width="80%">
 </p>
 <p align='center'>
-    <a href="https://user-images.githubusercontent.com/42736936/213940266-6c7e6413-c015-4146-b4a7-4f5addc33840.png"> <i> Image source </i> </a>.
+    <a href="https://user-images.githubusercontent.com/42736936/213940266-6c7e6413-c015-4146-b4a7-4f5addc33840.png"> <i> Image source </i> </a>
 </p>
 
 Theoretically, we can estimate the time of flight ( t_0 ) by measuring the delay between the peak of the source signal s(t) and the received signal r(t). As the source signal is in our control its peak can be set to t = 0 hence the real challenge is in finding the accurate peak location of the received signal. Multiple factors make this a challenging task.
@@ -41,7 +41,7 @@ Theoretically, we can estimate the time of flight ( t_0 ) by measuring the delay
   SPADs are fast enough to capture individual photons hence we can achieve a high sampling rate using SPADs. However, it is important to note that $\Phi(t)$ represents the expected received signal and not the actual photon timestamp histogram. Hence, even if we can avoid the pile-up effect and capture every photon incident on the SPAD pixel, the photon timestamp histogram would still not look like a quantized/ sampled version of $\Phi(t)$. This is because the photon timestamps follow a Poisson distribution where the value of $\Phi(t)$ represents the expected number of photons detected in a given time interval but the actual photon counts may vary. Hence, if the photon timestamps are not recorded for a sufficient number of laser cycles the peak of the photon timestamp histogram may not correspond to the received signal $\Phi(t)$ resulting in inaccurate depth estimates. The following GIF illustrates this phenomenon for a single SPAD pixel using our SPAD simulator.
 
     <p align='center'>
-      <img src='images/photon_hist.png' width="80%">
+      <img src='images/photon_hist.gif' width="80%">
     </p>
     <p align='center'>
         Figure 2 - GIF illustrating the effect of photon randomness on the measured photon timestamp histogram and its deviation from the expected received signal. We observe that increasing the number of laser cycles takes the measured histogram closer to the return signal waveform.
