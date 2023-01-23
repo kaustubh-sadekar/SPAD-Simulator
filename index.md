@@ -34,13 +34,35 @@ The following image illustrates the direct ToF imaging model for a SPAD-based To
     <a href="https://user-images.githubusercontent.com/42736936/213940266-6c7e6413-c015-4146-b4a7-4f5addc33840.png"> <i> Image source </i> </a>.
 </p>
 
-Theoretically, we can estimate time of flight ( t_0 ) by measuring the delay between the peak of the source signal s(t) and the received signal r(t). As the source signal is in our control its peak can be set to t = 0 hence the real challenge is in finding the accurate peak location of the received signal. Why is it challenging? There are multiple factors that make this a challenging task.
+Theoretically, we can estimate time of flight ( t_0 ) by measuring the delay between the peak of the source signal s(t) and the received signal r(t). As the source signal is in our control its peak can be set to t = 0 hence the real challenge is in finding the accurate peak location of the received signal. There are multiple factors that make this a challenging task.
 
 1. SPAD measurements are discrete.
- 
-SPAD measurements are discrete hence we cannot measure the entire continuous waveform of the recieved signal but sample it and try to estimate or approximate it. The technique used in SPAD-based single photon cameras to sample r(t) is called timecorrelated single-photon counting  (TCSPC). The timestamps for each detected photons are recorded for multiple laser cycles and finally a histogram of photon timestamps is created denoted by h[n] 
+  SPAD measurements are discrete hence we cannot measure the full continuous waveform of the recieved signal but only sample it and try to estimate or approximate it. The technique used in SPAD-based single photon cameras to sample r(t) is called timecorrelated single-photon counting(TCSPC). The timestamps for each detected photons are recorded for multiple laser cycles and finally a histogram of photon timestamps is created denoted by h[n].
 
-2. 
+2. Photon arrival is nondeterministic in nature.
+  SPADs are fast enough to capture individual photons hence we can achive high sampling rate using SPADs. However, it is important to note that $\Phi(t)$ represents the expected received signal and not the actual photon timestamp histogram. Hence, even if we are able to avoid the pile-up effect and capture every photon incident on the SPAD pixel, the photon timestamp histogram would still not look like a quantised/ sampled version of $\Phi(t)$. This is because the photon timestamps follow a Poisson distribution where the value of $\Phi(t)$ represents the expected number of photons detected in a given time interval but the actual photon counts may vary. Hence, if the photon timestamps are not recorded for sufficient number of laser cycles the peak of the photon timestamp histogram may not correspond to the received signal $\Phi(t)$ resulting in inacurate depth estimates. The following GIF illustrates this phenomenon for a single SPAD pixel using our SPAD simulator.
+
+<p align='center'>
+  <img src='images/photon_hist.png' width="80%">
+</p>
+<p align='center'>
+    Figure 2 - GIF illustrating the effect of photon randomness on the measure photon timestamp histogram and its deviation form the expected recieved signal. We clearly observe that increasing the number of laser cycles takes measured histogram closer to the return signal waveform.</i>.
+</p>
+
+3. Poor signal to background ratio (SBR).
+  SBR is the ratio of expected number of signal photons ($Phi_{sig}$) to the expected number of background photons ($\Phi_{bg}$). In case of poor SBR scenarios the difference between expected number of signal photons and background photons is less hence there is a high probability that the SPAD pixel measures more background photons than the signal photons resulting in noisy histograms with inacurate peak and hence noisy depth estimates. The following GIF illustrates the effect of SBR on the measured histogram and the depth estimates.
+  
+  
+<p align='center'>
+  <img src='images/effect_of_SBR.png' width="80%">
+</p>
+<p align='center'>
+    Figure 3 - GIF illustrating the effect of SBR on the measured histogram and the corresponding depth estimates.</i>.
+</p>
+
+
+  
+  
 
 
 ## .......This page will be updated soon .....................
