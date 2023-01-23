@@ -51,7 +51,7 @@ Theoretically, we can estimate the time of flight ( t_0 ) by measuring the delay
   
   
     <p align='center'>
-      <img src='images/effect_of_SBR.png' width="80%">
+      <img src='images/effect_of_SBR.gif' width="80%">
     </p>
     <p align='center'>
         Figure 3 - GIF illustrating the effect of SBR on the measured histogram and the corresponding depth estimates.
@@ -70,7 +70,7 @@ An ideal pulse would have a non-zero value at t<sub>0</sub> and zero elsewhere. 
 2. Full width half maximum (FWHM) - This is one of the controllable parameters of the simulator. It controls the width of the laser pulse. Since we are approximating the laser pulse as a gaussian, we can change the standard deviation by changing the FWHM value. The &sigma; of gaussian kernel is calculated using the following formula: FWHM = 2.355 &sigma; The following GIF illustrates the effect of FWHM on the laser pulse, measured histogram, and depth estimates. It shows that higher FWHM increases uncertainty in the depth estimates.
 
     <p align='center'>
-      <img src='images/effect_of_FWHM.png' width="80%">
+      <img src='images/effect_of_FWHM.gif' width="80%">
     </p>
     <p align='center'>
         Figure 4 - GIF illustrating the effect of FWHM on the laser pulse and the corresponding depth estimates.
@@ -79,7 +79,7 @@ An ideal pulse would have a non-zero value at t<sub>0</sub> and zero elsewhere. 
 3. Setting the laser power - The laser power can be controlled using another controllable parameter &Phi;<sub>sig</sub>. It is the average number of signal photons (or laser photons) per laser cycle. The following GIF illustrates the effect of &Phi;<sub>sig</sub> on the signal-to-background ratio (SBR) and the depth estimates. We observe that reducing the &Phi;<sub>sig</sub> results in poor SBR and increasing it results in better SBR.
 
     <p align='center'>
-      <img src='images/effect_of_FWHM.png' width="80%">
+      <img src='images/effect_of_FWHM.gif' width="80%">
     </p>
     <p align='center'>
         Figure 5 - GIF illustrating the effect of laser power on the SBR and the depth estimates.
@@ -106,7 +106,7 @@ In most scenarios, there are other ambient light sources present in the scene. H
 The following GIF illustrates the effect of scene albedo and depth on the SPAD measurements. 
 
   <p align='center'>
-    <img src='images/effect_of_FWHM.png' width="80%">
+    <img src='images/effect_of_FWHM.gif' width="80%">
   </p>
   <p align='center'>
       Figure 6 - GIF illustrating the effect of scene albedo and depth on the SPAD measurements.
