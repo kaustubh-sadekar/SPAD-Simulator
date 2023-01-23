@@ -44,7 +44,7 @@ Theoretically, we can estimate time of flight ( t_0 ) by measuring the delay bet
       <img src='images/photon_hist.png' width="80%">
     </p>
     <p align='center'>
-        Figure 2 - GIF illustrating the effect of photon randomness on the measure photon timestamp histogram and its deviation form the expected recieved signal. We clearly observe that increasing the number of laser cycles takes measured histogram closer to the return signal waveform.</i>.
+        Figure 2 - GIF illustrating the effect of photon randomness on the measure photon timestamp histogram and its deviation form the expected recieved signal. We clearly observe that increasing the number of laser cycles takes measured histogram closer to the return signal waveform.
     </p>
 
 3. Poor signal to background ratio (SBR). SBR is the ratio of expected number of signal photons ($Phi_{sig}$) to the expected number of background photons ($\Phi_{bg}$). In case of poor SBR scenarios the difference between expected number of signal photons and background photons is less hence there is a high probability that the SPAD pixel measures more background photons than the signal photons resulting in noisy histograms with inacurate peak and hence noisy depth estimates. The following GIF illustrates the effect of SBR on the measured histogram and the depth estimates.
@@ -54,7 +54,7 @@ Theoretically, we can estimate time of flight ( t_0 ) by measuring the delay bet
       <img src='images/effect_of_SBR.png' width="80%">
     </p>
     <p align='center'>
-        Figure 3 - GIF illustrating the effect of SBR on the measured histogram and the corresponding depth estimates.</i>.
+        Figure 3 - GIF illustrating the effect of SBR on the measured histogram and the corresponding depth estimates.
     </p>
 
 ## Major steps of the SPAD simulator
