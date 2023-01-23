@@ -76,7 +76,7 @@ An ideal pulse would have a non-zero value at t<sub>0</sub> and zero elsewhere. 
         Figure 4 - GIF illustrating the effect of FWHM on the laser pulse and the corresponding depth estimates.
     </p>
 
-3. Setting the laser power - The laser power can be controlled using another controllable parameter &Phi;<sub>sig</sub>. It is the average number of signal photons (or laser photons) per laser cycle. Following GIF illustrates the effect of &Phi;<sub>sig</sub> on the signal-to-background ratio (SBR) and the depth estimates. We observe that reducing the &Phi;<sub>sig</sub> results in poor SBR and increasing it results in better SBR.
+3. Setting the laser power - The laser power can be controlled using another controllable parameter &Phi;<sub>sig</sub>. It is the average number of signal photons (or laser photons) per laser cycle. The following GIF illustrates the effect of &Phi;<sub>sig</sub> on the signal-to-background ratio (SBR) and the depth estimates. We observe that reducing the &Phi;<sub>sig</sub> results in poor SBR and increasing it results in better SBR.
 
     <p align='center'>
       <img src='images/effect_of_FWHM.png' width="80%">
@@ -87,17 +87,46 @@ An ideal pulse would have a non-zero value at t<sub>0</sub> and zero elsewhere. 
 
 4. Setting the laser time period - This is another parameter that can be controlled in the simulator. Changing the time period T changes the maximum depth value that can be measured as d<sub>max</sub> = Tc/2, where c is the speed of light.
 
-Finally, we apply the effect of scene response function (time delay calculated in first step) by convolving the generated gaussian kernel with the SRF to finally get the &sigma;(t - t<sub>0</sub>). 
+Finally, we apply the effect of the scene response function (time delay calculated in the first step) by convolving the generated gaussian kernel with the SRF to finally get the &sigma;(t - t<sub>0</sub>). 
 
 ### Adding the background noise
-
-In most scenarios there are other ambient light sources present in the scene. Hence the photons incident on SPAD pixels may either be signal photons originated from the laser or the background photons originated from the ambient light sources. For simplicity we assume that the average number of background photons is constant. We control the average number of ambient photons by a &Phi;<sub>bg</sub> in our simulator. It is added as a constant DC shift to the above returning signal equation. The following GIF illustrates the effect of &Phi;<sub>bg</sub> on the SBR, the photon timestamps and the depth estimates.
+In most scenarios, there are other ambient light sources present in the scene. Hence the photons incident on SPAD pixels may either be signal photons originating from the laser or the background photons originating from the ambient light sources. For simplicity, we assume that the average number of background photons is constant. We control the average number of ambient photons by a &Phi;<sub>bg</sub> in our simulator. It is added as a constant DC shift to the above returning signal equation. The following GIF illustrates the effect of &Phi;<sub>bg</sub> on the SBR, the photon timestamps and the depth estimates.
 
 ### Simulating the effect of scene albedo and depth
 
+1. Effect of scene albedo.
+  The scene albedo (or color) has a similar effect on the signal photons and the background photons. It scales the average number of photons by a factor *a* ranging between 0 and 1. Objects with darker albedo absorb more photons hence the scaling factor is closer to 0. Similarly, the value of *a* for brighter objects is close to 1. The effect of albedo is incorporated into the simulation by multiplying the expected signal photons and background photons 
+
+2. Effect of scene depth on signal photons.
+  The average number of signal photons in the received signal reduces by the square of scene depth. This phenomenon is called the inverse square law. As the distance of our imaging system increases from an object, the total illuminated area increases by the square of distance hence the average number of photons received on each point of the object reduces by the square of the distance as the total photons coming out of the laser are constant. This explains why the number of photons returning back from a point in the scene reduces by the square of the distance. This effect is incorporated in the simulation by dividing the average number of signal photons by the square of scene depth. 
+
+3. Effect of scene depth on background photons.
+  The inverse square law also applies to the number of photons received by the sensor reflected by some point in the scene. However, we do not observe the object brightness to be inversely proportional to the square of depth because the total number of pixels imaging that object is proportional to the square of the distance. These two phenomenons compensate each other and the total number of photons remains unchanged w.r.t the scene depth. Hence the depth factor does not show up in the calculation of background photons.
+
+The following GIF illustrates the effect of scene albedo and depth on the SPAD measurements. 
+
+  <p align='center'>
+    <img src='images/effect_of_FWHM.png' width="80%">
+  </p>
+  <p align='center'>
+      Figure 6 - GIF illustrating the effect of scene albedo and depth on the SPAD measurements.
+  </p>
 
 
+### Simulating the Poisson randomness of photons 
 
+Based on the above steps the final received signal can be calculated as &Phi;(t) = (*a* &Phi;<sub>sig</sub>/d<sup>2</sup>) &delta;(t - t<sub>0</sub>) + &Phi;<sub>bg</sub> *a*. This is the expected received signal at any arbitrary time t. These expected signal values are passed to a Poisson random generator which simulates the photon arrival timestamps. Finally, we accumulate these timestamps and generate the timestamp histogram &Hat;&Phi;[n]. 
+
+`The entire process explained above is vectorized to simulate measurements for all the SPAD pixels of the single photon camera. This significantly increases the simulation speed.`
+
+## Simulating SPAD sensor measurements for different SBR ratios
+
+<p align='center'>
+  <img src='images/Simulator-Demo.gif' width="80%">
+</p>
+<p align='center'>
+    Figure 7 - GIF illustrating the single photon camera measurements and depth estimates updated over the number of laser cycles for low SBR scenarios.
+</p>
 
 
 ## .......This page will be updated soon .....................
@@ -106,5 +135,3 @@ In most scenarios there are other ambient light sources present in the scene. He
 ## References
 1. F. Gutierrez-Barragan, A. Ingle, T. Seets, M. Gupta and A. Velten, "Compressive Single-Photon 3D Cameras," 2022 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), New Orleans, LA, USA, 2022, pp. 17833-17843, doi: 10.1109/
 CVPR52688.2022.01733.
-
-2. 
