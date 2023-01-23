@@ -26,7 +26,7 @@ The following image illustrates the direct ToF imaging model for a SPAD-based To
 
 `So why is it so difficult to estimate depth? - we can start the timer as the laser emits the signal and stop the timer when the signal is detected.`
 <p align='center'>
-  <img src='https://user-images.githubusercontent.com/42736936/213940266-6c7e6413-c015-4146-b4a7-4f5addc33840.png' width="80%">
+  <img src='https://user-images.githubusercontent.com/42736936/213940266-6c7e6413-c015-4146-b4a7-4f5addc33840.png' width="60%">
 </p>
 <p align='center'>
     <a href="https://user-images.githubusercontent.com/42736936/213940266-6c7e6413-c015-4146-b4a7-4f5addc33840.png"> <i> Image source </i> </a>
