@@ -129,7 +129,6 @@ Based on the above steps the final received signal can be calculated as &Phi;(t)
 </p>
 
 
-## .......This page will be updated soon .....................
 ---
 
 ## References
