@@ -60,7 +60,7 @@ Theoretically, we can estimate the time of flight ( t_0 ) by measuring the delay
 ## Major steps of the SPAD simulator
 
 ### Calculate the time-of-flight (t<sub>0</sub>) from the ground truth depth value.
-We use the following formula t<sub>0</sub> = 2d/c where d is the ground truth depth value and c is the speed of light.
+We use the following formula t<sub>0</sub> = 2d/c where d is the ground truth depth value and c is the speed of light. This is treated as the scene response function (SRF) which indicates the amount of delay a 3D point induces to the return signal. The actual SRF would also include the multi-path interference effect and would highlight the overall light transport properties at that scene point.
 
 ### Modelling the probing function or the laser pulse s(t) = &delta;(t). 
 An ideal pulse would have a non-zero value at t<sub>0</sub> and zero elsewhere. However, this is practically impossible to achieve. The actual shape of the waveform is limited due to three major physical properties of the laser diode (i) rise time (time taken for the laser intensity to reach from zero to maximum), (ii) fall time (opposite of rise time) and (iii) laser power - To emit a desired amount of energy with a limited power laser source we need to keep the laser on for some minimum non-zero amount of time which determines the laser pulse width.
@@ -76,11 +76,26 @@ An ideal pulse would have a non-zero value at t<sub>0</sub> and zero elsewhere. 
         Figure 4 - GIF illustrating the effect of FWHM on the laser pulse and the corresponding depth estimates.
     </p>
 
-3. Setting the laser power - The laser power can be controlled using another controllable parameter &Phi;<sub>sig</sub>. &Phi;<sub>sig</sub> is the average number of signal photons (or laser photons) per laser cycle. 
+3. Setting the laser power - The laser power can be controlled using another controllable parameter &Phi;<sub>sig</sub>. It is the average number of signal photons (or laser photons) per laser cycle. Following GIF illustrates the effect of &Phi;<sub>sig</sub> on the signal-to-background ratio (SBR) and the depth estimates. We observe that reducing the &Phi;<sub>sig</sub> results in poor SBR and increasing it results in better SBR.
 
-
+    <p align='center'>
+      <img src='images/effect_of_FWHM.png' width="80%">
+    </p>
+    <p align='center'>
+        Figure 5 - GIF illustrating the effect of laser power on the SBR and the depth estimates.
+    </p>
 
 4. Setting the laser time period - This is another parameter that can be controlled in the simulator. Changing the time period T changes the maximum depth value that can be measured as d<sub>max</sub> = Tc/2, where c is the speed of light.
+
+Finally, we apply the effect of scene response function (time delay calculated in first step) by convolving the generated gaussian kernel with the SRF to finally get the &sigma;(t - t<sub>0</sub>). 
+
+### Adding the background noise
+
+In most scenarios there are other ambient light sources present in the scene. Hence the photons incident on SPAD pixels may either be signal photons originated from the laser or the background photons originated from the ambient light sources. For simplicity we assume that the average number of background photons is constant. We control the average number of ambient photons by a &Phi;<sub>bg</sub> in our simulator. It is added as a constant DC shift to the above returning signal equation. The following GIF illustrates the effect of &Phi;<sub>bg</sub> on the SBR, the photon timestamps and the depth estimates.
+
+### Simulating the effect of scene albedo and depth
+
+
 
 
 
